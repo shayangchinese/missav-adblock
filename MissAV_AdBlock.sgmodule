@@ -1,33 +1,24 @@
 #!name=MissAV AdBlock
-#!desc=拦截 MissAV (missav.ws) 的弹窗广告、页面内嵌广告、跳转广告和视频广告
+#!desc=Block ads on missav.ws including popups, inline ads, redirects and video ads
 
 [Rule]
-# ========== 广告联盟 / 广告网络域名 ==========
-# TSyndicate 广告平台
 DOMAIN-SUFFIX,tsyndicate.com,REJECT
-# ExoClick 广告平台
 DOMAIN-SUFFIX,exoclick.com,REJECT
 DOMAIN-SUFFIX,exosrv.com,REJECT
 DOMAIN-SUFFIX,exdynsrv.com,REJECT
 DOMAIN-SUFFIX,realsrv.com,REJECT
-# JuicyAds 广告平台
 DOMAIN-SUFFIX,juicyads.com,REJECT
 DOMAIN-SUFFIX,juicyads.mobi,REJECT
-# TrafficJunky 广告平台
 DOMAIN-SUFFIX,trafficjunky.com,REJECT
 DOMAIN-SUFFIX,trafficjunky.net,REJECT
-# 跳转 / 重定向广告域名
 DOMAIN-SUFFIX,xlivrdr.com,REJECT
-# 跟踪 / 统计域名
 DOMAIN-SUFFIX,experttrafficcounter.com,REJECT
 DOMAIN-SUFFIX,storageimagedisplay.com,REJECT
 DOMAIN-SUFFIX,creative-stat1.com,REJECT
-# 已知恶意域名
 DOMAIN-SUFFIX,hartattenuate.com,REJECT
 DOMAIN-SUFFIX,wearychallengeraise.com,REJECT
 DOMAIN-SUFFIX,recordedthereby.com,REJECT
 DOMAIN-SUFFIX,unseenreport.com,REJECT
-# 其他常见广告域名
 DOMAIN-SUFFIX,trafficstars.com,REJECT
 DOMAIN-SUFFIX,adtng.com,REJECT
 DOMAIN-SUFFIX,adsco.re,REJECT
@@ -43,18 +34,15 @@ DOMAIN-SUFFIX,admaven.com,REJECT
 DOMAIN-SUFFIX,ad-maven.com,REJECT
 DOMAIN-SUFFIX,ad-delivery.net,REJECT
 DOMAIN-SUFFIX,ero-advertising.com,REJECT
-# 弹窗广告域名
 DOMAIN-SUFFIX,popunder.net,REJECT
 DOMAIN-SUFFIX,popmyads.com,REJECT
 DOMAIN-SUFFIX,adskeeper.com,REJECT
 DOMAIN-SUFFIX,bidvertiser.com,REJECT
 DOMAIN-SUFFIX,mgid.com,REJECT
-# 追踪器
 DOMAIN-SUFFIX,doubleclick.net,REJECT
 DOMAIN-SUFFIX,googlesyndication.com,REJECT
 DOMAIN-SUFFIX,googleadservices.com,REJECT
 DOMAIN-SUFFIX,adnxs.com,REJECT
-# 关键字匹配
 DOMAIN-KEYWORD,adserver,REJECT
 DOMAIN-KEYWORD,adtrack,REJECT
 DOMAIN-KEYWORD,popunder,REJECT
@@ -75,4 +63,4 @@ DOMAIN-KEYWORD,clickunder,REJECT
 MissAV-AdRemover = type=http-response,pattern=^https?:\/\/missav\.ws,requires-body=1,max-size=3145728,script-path=https://raw.githubusercontent.com/shayangchinese/missav-adblock/main/missav-adremover.js,timeout=30
 
 [MITM]
-hostname = %APPEND% missav.ws, *.missav.ws, *.tsyndicate.com, *.exoclick.com, *.exosrv.com, *.realsrv.com, *.juicyads.com, *.xlivrdr.com, *.trafficstars.com
+hostname = %APPEND% missav.ws, *.missav.ws
