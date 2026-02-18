@@ -1,0 +1,120 @@
+#!name=MissAV AdBlock
+#!desc=拦截 MissAV (missav.ws) 的弹窗广告、页面内嵌广告、跳转广告和视频广告 | 适用于 macOS & iOS
+#!system=ios,mac
+#!category=Ad Blocker
+#!homepage=https://github.com/user/missav-adblock
+#!icon=https://cdn-icons-png.flaticon.com/512/3917/3917139.png
+
+[General]
+force-http-engine-hosts = %APPEND% missav.ws, *.missav.ws
+
+[Rule]
+# ========== 广告联盟 / 广告网络域名 ==========
+# TSyndicate 广告平台
+DOMAIN-SUFFIX,tsyndicate.com,REJECT
+DOMAIN-SUFFIX,cdn.tsyndicate.com,REJECT
+
+# ExoClick 广告平台（成人网站常用广告联盟）
+DOMAIN-SUFFIX,exoclick.com,REJECT
+DOMAIN-SUFFIX,exosrv.com,REJECT
+DOMAIN-SUFFIX,exdynsrv.com,REJECT
+DOMAIN-SUFFIX,realsrv.com,REJECT
+DOMAIN-SUFFIX,a.realsrv.com,REJECT
+DOMAIN-SUFFIX,syndication.exoclick.com,REJECT
+DOMAIN-SUFFIX,static.exoclick.com,REJECT
+DOMAIN-SUFFIX,main.exoclick.com,REJECT
+
+# JuicyAds 广告平台
+DOMAIN-SUFFIX,juicyads.com,REJECT
+DOMAIN-SUFFIX,ads.juicyads.com,REJECT
+DOMAIN-SUFFIX,juicyads.mobi,REJECT
+
+# TrafficJunky 广告平台
+DOMAIN-SUFFIX,trafficjunky.com,REJECT
+DOMAIN-SUFFIX,trafficjunky.net,REJECT
+
+# 跳转 / 重定向广告域名
+DOMAIN-SUFFIX,xlivrdr.com,REJECT
+DOMAIN-SUFFIX,go.xlivrdr.com,REJECT
+
+# 跟踪 / 统计域名
+DOMAIN-SUFFIX,experttrafficcounter.com,REJECT
+DOMAIN-SUFFIX,storageimagedisplay.com,REJECT
+DOMAIN-SUFFIX,cdn.storageimagedisplay.com,REJECT
+DOMAIN-SUFFIX,creative-stat1.com,REJECT
+DOMAIN-SUFFIX,cdn.creative-stat1.com,REJECT
+
+# 已知恶意 / Sinkholed 域名
+DOMAIN-SUFFIX,hartattenuate.com,REJECT
+DOMAIN-SUFFIX,wearychallengeraise.com,REJECT
+DOMAIN-SUFFIX,recordedthereby.com,REJECT
+DOMAIN-SUFFIX,unseenreport.com,REJECT
+
+# ========== 其他常见成人网站广告域名 ==========
+DOMAIN-SUFFIX,trafficstars.com,REJECT
+DOMAIN-SUFFIX,tsyndicate.com,REJECT
+DOMAIN-SUFFIX,adtng.com,REJECT
+DOMAIN-SUFFIX,adsco.re,REJECT
+DOMAIN-SUFFIX,adspyglass.com,REJECT
+DOMAIN-SUFFIX,clickadu.com,REJECT
+DOMAIN-SUFFIX,clickadilla.com,REJECT
+DOMAIN-SUFFIX,hilltopads.com,REJECT
+DOMAIN-SUFFIX,plugrush.com,REJECT
+DOMAIN-SUFFIX,popcash.net,REJECT
+DOMAIN-SUFFIX,popads.net,REJECT
+DOMAIN-SUFFIX,propellerads.com,REJECT
+DOMAIN-SUFFIX,admaven.com,REJECT
+DOMAIN-SUFFIX,ad-maven.com,REJECT
+DOMAIN-SUFFIX,ad-delivery.net,REJECT
+DOMAIN-SUFFIX,ero-advertising.com,REJECT
+
+# ========== 常见弹窗 / Popup 广告域名 ==========
+DOMAIN-SUFFIX,popunder.net,REJECT
+DOMAIN-SUFFIX,popmyads.com,REJECT
+DOMAIN-SUFFIX,adskeeper.com,REJECT
+DOMAIN-SUFFIX,bidvertiser.com,REJECT
+DOMAIN-SUFFIX,mgid.com,REJECT
+
+# ========== 追踪器 / Analytics ==========
+DOMAIN-SUFFIX,doubleclick.net,REJECT
+DOMAIN-SUFFIX,googlesyndication.com,REJECT
+DOMAIN-SUFFIX,googleadservices.com,REJECT
+DOMAIN-SUFFIX,google-analytics.com,REJECT
+DOMAIN-SUFFIX,adnxs.com,REJECT
+
+# ========== 通用广告关键字匹配 ==========
+DOMAIN-KEYWORD,adserver,REJECT
+DOMAIN-KEYWORD,adtrack,REJECT
+DOMAIN-KEYWORD,popunder,REJECT
+DOMAIN-KEYWORD,clickunder,REJECT
+
+[URL Rewrite]
+# ========== 拦截弹窗和跳转脚本 ==========
+# 阻止广告弹窗 JS
+^https?:\/\/missav\.ws\/.*\.js\?.*ad type=302 status=200
+^https?:\/\/.*\.tsyndicate\.com\/ - reject
+^https?:\/\/.*\.exoclick\.com\/ - reject
+^https?:\/\/.*\.exosrv\.com\/ - reject
+^https?:\/\/.*\.realsrv\.com\/ - reject
+^https?:\/\/.*\.juicyads\.com\/ - reject
+^https?:\/\/.*\.xlivrdr\.com\/ - reject
+^https?:\/\/.*\.trafficstars\.com\/ - reject
+^https?:\/\/.*\.popads\.net\/ - reject
+^https?:\/\/.*\.popcash\.net\/ - reject
+
+# 阻止跳转类广告
+^https?:\/\/missav\.ws\/.*\/redirect - reject
+^https?:\/\/missav\.ws\/.*\/click - reject
+
+[Map Local]
+# 将广告请求映射为空响应
+^https?:\/\/.*tsyndicate\.com\/.*\.js$ data-type=text data="{}" status-code=200
+^https?:\/\/.*exoclick\.com\/.*\.js$ data-type=text data="{}" status-code=200
+^https?:\/\/.*exosrv\.com\/.*\.js$ data-type=text data="{}" status-code=200
+
+[Script]
+# ========== 页面广告元素移除脚本 ==========
+MissAV-AdRemover = type=http-response,pattern=^https?:\/\/missav\.ws\/,requires-body=1,max-size=3145728,script-path=missav-adremover.js,timeout=30
+
+[MITM]
+hostname = %APPEND% missav.ws, *.missav.ws, *.tsyndicate.com, *.exoclick.com, *.exosrv.com, *.realsrv.com, *.juicyads.com, *.xlivrdr.com, *.trafficstars.com
